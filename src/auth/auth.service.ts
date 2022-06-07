@@ -4,13 +4,13 @@ import { AuthDto } from './dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private prisma: PrismaService) {}
+    constructor(private prisma: PrismaService) {}
 
-  register(dto: AuthDto) {
-    return { msg: 'user is signed up' };
-  }
+    register(dto: AuthDto) {
+        return { msg: 'user is signed up' };
+    }
 
-  login() {
-    return { msg: 'user is signed in' };
-  }
+    login() {
+        return { msg: 'user is signed in' };
+    }
 }
