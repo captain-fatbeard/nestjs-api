@@ -17,5 +17,5 @@ model User {
 
   email String
   hash String
-  name String
+  name String?
 }
