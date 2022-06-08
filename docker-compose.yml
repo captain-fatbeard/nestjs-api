@@ -9,16 +9,16 @@ services:
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=mydb
     networks:
-      - nestapp
+      - nestjsapp
   test-db:
     image: postgres:13
     ports:
       - 5435:5432
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=mydb
     networks:
-      - nestapp
+      - nestjsapp
 networks:
-  nestapp:
+  nestjsapp:
