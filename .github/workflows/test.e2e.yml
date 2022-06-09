@@ -16,7 +16,7 @@ jobs:
       uses: actions/checkout@v1
 
     - name: install dependencies
-      run: npm run i
+      run: npm i
 
     - name: start db container and migrate database
       run: npm run db:dev:restart
