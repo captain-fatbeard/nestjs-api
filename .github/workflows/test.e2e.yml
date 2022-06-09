@@ -1,0 +1,29 @@
+name: e2e Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  docker:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: install dependencies
+      run: npm run i
+
+    - name: start db container and migrate database
+      run: npm run db:dev:restart
+
+    - name: Run tests
+      run: npm run test:e2e
+
+    - name: Stop containers
+      if: always()
+      run: docker-compose down --remove-orphans 
