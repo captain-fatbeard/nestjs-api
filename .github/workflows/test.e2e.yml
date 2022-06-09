@@ -19,7 +19,7 @@ jobs:
       run: npm i --force
 
     - name: start db container and migrate database
-      run: npm run db:dev:restart
+      run: npm run db:test:restart
 
     - name: Run tests
       run: npm run test:e2e
