@@ -7,10 +7,13 @@ import {
     ParseIntPipe,
     Post,
     Put,
+    UseGuards,
 } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guard';
 import { ClientService } from './client.service';
 import { CreateClientDto, UpdateClientDto } from './dto';
 
+@UseGuards(JwtGuard)
 @Controller('/clients')
 export class ClientController {
     constructor(private clientService: ClientService) {}
