@@ -9,7 +9,7 @@ import {
     Put,
     UseGuards,
 } from '@nestjs/common';
-import { JwtGuard } from 'src/auth/guard';
+import { JwtGuard } from '../auth/guard';
 import { ClientService } from './client.service';
 import { CreateClientDto, UpdateClientDto } from './dto';
 
