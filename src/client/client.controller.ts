@@ -9,12 +9,15 @@ import {
     Put,
     UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from '../auth/guard';
 import { ClientService } from './client.service';
 import { CreateClientDto, UpdateClientDto } from './dto';
 
 @UseGuards(JwtGuard)
 @Controller('/clients')
+@ApiTags('clients')
+@ApiBearerAuth()
 export class ClientController {
     constructor(private clientService: ClientService) {}
 
