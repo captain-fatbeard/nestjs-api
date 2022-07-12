@@ -20,6 +20,7 @@ model User {
     name String?
 
     clients Client[]
+    campaigns Campaign[]
 
     @@map("users")
 }
@@ -30,6 +31,25 @@ model Client {
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
     users User[]
-
+    campaigns Campaign[]
     @@map("clients")
+}
+
+model Campaign {
+    id Int @id @default(autoincrement())
+    name String
+    slug String?
+    theme String?
+    is_published Boolean @default(false)
+    is_template Boolean @default(false)
+    from DateTime?
+    to DateTime?
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    client Client @relation(fields: [clientId], references: [id])
+    user User @relation(fields: [userId], references: [id])
+    clientId Int
+    userId Int
+
+    @@map("campaigns")
 }
