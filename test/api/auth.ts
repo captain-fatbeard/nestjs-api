@@ -14,7 +14,8 @@ export function authTest(pactum) {
                     .withBody({
                         password: dto.password,
                     })
-                    .expectStatus(400);
+                    .expectStatus(400)
+                    .stores('userId', 'id');
             });
             it('should not register with empty password', () => {
                 return pactum

@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { UserController } from './user/user.controller';
 import { ClientModule } from './client/client.module';
+import { CampaignModule } from './campaign/campaign.module';
 
 @Module({
     imports: [
@@ -12,6 +13,7 @@ import { ClientModule } from './client/client.module';
         PrismaModule,
         AuthModule,
         ClientModule,
+        CampaignModule,
     ],
     controllers: [UserController],
 })

@@ -3,7 +3,7 @@ import { Test } from '@nestjs/testing';
 import * as pactum from 'pactum';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { AppModule } from '../src/app.module';
-import { authTest, clientTest, userTest } from './api';
+import { authTest, campaignTest, clientTest, userTest } from './api';
 
 describe('App e2e', () => {
     let app: INestApplication;
@@ -38,4 +38,5 @@ describe('App e2e', () => {
     authTest(pactum); // auth must run first to get access token for security headers
     userTest(pactum);
     clientTest(pactum);
+    campaignTest(pactum); // user and client must run before to get id's
 });

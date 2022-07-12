@@ -1,28 +1,6 @@
 import { CreateClientDto, UpdateClientDto } from 'src/client/dto';
 
 export function clientTest(pactum) {
-    // describe('users', () => {
-    //     it('should not get user with incorrect access token', () => {
-    //         return pactum
-    //             .spec()
-    //             .get('/users/me')
-    //             .withHeaders({
-    //                 Authorization: 'Bearer notoken',
-    //             })
-    //             .expectStatus(401);
-    //     });
-
-    //     it('should get user with correct access token', () => {
-    //         return pactum
-    //             .spec()
-    //             .get('/users/me')
-    //             .withHeaders({
-    //                 Authorization: 'Bearer $S{userAt}',
-    //             })
-    //             .expectStatus(200);
-    //     });
-    // });
-
     describe('clients', () => {
         const createDto: CreateClientDto = {
             name: 'client name',
