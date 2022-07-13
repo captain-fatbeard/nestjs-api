@@ -14,9 +14,9 @@ export function authTest(pactum) {
                     .withBody({
                         password: dto.password,
                     })
-                    .expectStatus(400)
-                    .stores('userId', 'id');
+                    .expectStatus(400);
             });
+
             it('should not register with empty password', () => {
                 return pactum
                     .spec()
@@ -26,6 +26,7 @@ export function authTest(pactum) {
                     })
                     .expectStatus(400);
             });
+
             it('should not register with empty body', () => {
                 return pactum
                     .spec()
@@ -33,6 +34,7 @@ export function authTest(pactum) {
                     .withBody({})
                     .expectStatus(400);
             });
+
             it('should register user with correct credentials', () => {
                 return pactum
                     .spec()
@@ -51,6 +53,7 @@ export function authTest(pactum) {
                     })
                     .expectStatus(400);
             });
+
             it('should not login with empty password', () => {
                 return pactum
                     .spec()
@@ -60,6 +63,7 @@ export function authTest(pactum) {
                     })
                     .expectStatus(400);
             });
+
             it('should not login with empty body', () => {
                 return pactum
                     .spec()
@@ -67,13 +71,13 @@ export function authTest(pactum) {
                     .withBody({})
                     .expectStatus(400);
             });
+
             it('should login with correct credentials', () => {
                 return pactum
                     .spec()
                     .post('/auth/login')
                     .withBody(dto)
-                    .expectStatus(200)
-                    .stores('userAt', 'access_token');
+                    .expectStatus(200);
             });
         });
     });

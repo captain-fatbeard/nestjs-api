@@ -19,6 +19,7 @@ export function clientTest(pactum) {
                 .withBody({})
                 .expectStatus(400);
         });
+
         it('should create with correct dto', () => {
             return pactum
                 .spec()
@@ -28,8 +29,9 @@ export function clientTest(pactum) {
                 })
                 .withBody(createDto)
                 .expectStatus(201)
-                .stores('clientId', 'id');
+                .stores('testClientId', 'id');
         });
+
         it('should show all', () => {
             return pactum
                 .spec()
@@ -39,6 +41,7 @@ export function clientTest(pactum) {
                 })
                 .expectStatus(200);
         });
+
         it('should not show 1 with incorrect param', () => {
             return pactum
                 .spec()
@@ -48,29 +51,32 @@ export function clientTest(pactum) {
                 })
                 .expectStatus(404);
         });
+
         it('should show 1 with correct param', () => {
             return pactum
                 .spec()
-                .get('/clients/$S{clientId}')
+                .get('/clients/$S{testClientId}')
                 .withHeaders({
                     Authorization: 'Bearer $S{userAt}',
                 })
                 .expectStatus(200);
         });
+
         it('should update', () => {
             return pactum
                 .spec()
-                .put('/clients/$S{clientId}')
+                .put('/clients/$S{testClientId}')
                 .withHeaders({
                     Authorization: 'Bearer $S{userAt}',
                 })
                 .withBody(updateDto)
                 .expectStatus(200);
         });
+
         it('should delete', () => {
             return pactum
                 .spec()
-                .delete('/clients/$S{clientId}')
+                .delete('/clients/$S{testClientId}')
                 .withHeaders({
                     Authorization: 'Bearer $S{userAt}',
                 })

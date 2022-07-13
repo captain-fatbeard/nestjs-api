@@ -27,12 +27,12 @@ export class CreateCampaignDto {
     @IsBoolean()
     @IsNotEmpty()
     @ApiProperty()
-    is_published: boolean;
+    isPublished: boolean;
 
     @IsBoolean()
     @IsNotEmpty()
     @ApiProperty()
-    is_template: boolean;
+    isTemplate: boolean;
 
     @IsDateString()
     @IsOptional()

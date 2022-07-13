@@ -12,12 +12,13 @@ datasource db {
 
 model User {
     id Int @id @default(autoincrement())
-    createdAt DateTime @default(now()) 
-    updatedAt DateTime @updatedAt
 
     email String @unique
     hash String
     name String?
+
+    createdAt DateTime @default(now()) 
+    updatedAt DateTime @updatedAt
 
     clients Client[]
     campaigns Campaign[]
@@ -27,29 +28,37 @@ model User {
 
 model Client {
     id Int @id @default(autoincrement())
+
     name String @unique
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
+    
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
     users User[]
     campaigns Campaign[]
+
     @@map("clients")
 }
 
 model Campaign {
     id Int @id @default(autoincrement())
+
     name String
     slug String?
     theme String?
-    is_published Boolean @default(false)
-    is_template Boolean @default(false)
+    isPublished Boolean @default(false)
+    isTemplate Boolean @default(false)
     from DateTime?
     to DateTime?
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-    client Client @relation(fields: [clientId], references: [id])
-    user User @relation(fields: [userId], references: [id])
-    clientId Int
-    userId Int
 
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    clientId Int
+    client Client @relation(fields: [clientId], references: [id])
+
+    userId Int
+    user User @relation(fields: [userId], references: [id])
+    
     @@map("campaigns")
 }
