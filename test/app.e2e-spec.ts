@@ -35,8 +35,46 @@ describe('App e2e', () => {
         app.close();
     });
 
-    authTest(pactum); // auth must run first to get access token for security headers
+    // create persistant user to use in tests
+    it('should create test user', () => {
+        return pactum
+            .spec()
+            .post('/auth/register')
+            .withBody({
+                email: 'testuser@test.test',
+                password: 'password',
+            })
+            .expectStatus(201)
+            .stores('userAt', 'access_token');
+    });
+
+    // get persistant userId to use in tests
+    it('should get test user', () => {
+        return pactum
+            .spec()
+            .get('/users/me')
+            .withHeaders({
+                Authorization: 'Bearer $S{userAt}',
+            })
+            .expectStatus(200)
+            .stores('userId', 'id');
+    });
+
+    // create persistant client to use in tests
+    it('should create test client', () => {
+        return pactum
+            .spec()
+            .post('/clients')
+            .withHeaders({
+                Authorization: 'Bearer $S{userAt}',
+            })
+            .withBody({ name: 'persistant client' })
+            .expectStatus(201)
+            .stores('clientId', 'id');
+    });
+
+    authTest(pactum);
     userTest(pactum);
     clientTest(pactum);
-    campaignTest(pactum); // user and client must run before to get id's
+    campaignTest(pactum);
 });
