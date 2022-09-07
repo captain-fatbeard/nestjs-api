@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserController } from './user/user.controller';
 import { ClientModule } from './client/client.module';
 import { CampaignModule } from './campaign/campaign.module';
+import { ParticipantModule } from './participant/participant.module';
 
 @Module({
     imports: [
@@ -14,6 +15,7 @@ import { CampaignModule } from './campaign/campaign.module';
         AuthModule,
         ClientModule,
         CampaignModule,
+        ParticipantModule,
     ],
     controllers: [UserController],
 })

@@ -59,6 +59,22 @@ model Campaign {
 
     userId Int
     user User @relation(fields: [userId], references: [id])
+
+    participant Participant[]
     
     @@map("campaigns")
+}
+
+model Participant {
+    id Int @id @default(autoincrement())
+
+    key String @unique @default(uuid())
+    email String @unique
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    campaigns Campaign[]
+    
+    @@map("participants")
 }

@@ -4,6 +4,7 @@ import * as pactum from 'pactum';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { AppModule } from '../src/app.module';
 import { authTest, campaignTest, clientTest, userTest } from './api';
+import { participantTest } from './api/participant';
 
 describe('App e2e', () => {
     let app: INestApplication;
@@ -73,8 +74,27 @@ describe('App e2e', () => {
             .stores('clientId', 'id');
     });
 
+    it('should create test campaign', () => {
+        return pactum
+            .spec()
+            .post('/campaigns')
+            .withHeaders({
+                Authorization: 'Bearer $S{userAt}',
+            })
+            .withBody({
+                name: 'test campaign name',
+                isPublished: true,
+                isTemplate: true,
+                clientId: '$S{clientId}',
+                userId: '$S{userId}',
+            })
+            .expectStatus(201)
+            .stores('testCampaignId', 'id');
+    });
+
     authTest(pactum);
     userTest(pactum);
     clientTest(pactum);
     campaignTest(pactum);
+    participantTest(pactum);
 });
