@@ -39,7 +39,24 @@ CREATE TABLE "campaigns" (
 );
 
 -- CreateTable
+CREATE TABLE "participants" (
+    "id" SERIAL NOT NULL,
+    "key" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "participants_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "_ClientToUser" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "_CampaignToParticipant" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
 );
@@ -51,10 +68,22 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 CREATE UNIQUE INDEX "clients_name_key" ON "clients"("name");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "participants_key_key" ON "participants"("key");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "participants_email_key" ON "participants"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "_ClientToUser_AB_unique" ON "_ClientToUser"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_ClientToUser_B_index" ON "_ClientToUser"("B");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_CampaignToParticipant_AB_unique" ON "_CampaignToParticipant"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_CampaignToParticipant_B_index" ON "_CampaignToParticipant"("B");
 
 -- AddForeignKey
 ALTER TABLE "campaigns" ADD CONSTRAINT "campaigns_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -67,3 +96,9 @@ ALTER TABLE "_ClientToUser" ADD CONSTRAINT "_ClientToUser_A_fkey" FOREIGN KEY ("
 
 -- AddForeignKey
 ALTER TABLE "_ClientToUser" ADD CONSTRAINT "_ClientToUser_B_fkey" FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_CampaignToParticipant" ADD CONSTRAINT "_CampaignToParticipant_A_fkey" FOREIGN KEY ("A") REFERENCES "campaigns"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_CampaignToParticipant" ADD CONSTRAINT "_CampaignToParticipant_B_fkey" FOREIGN KEY ("B") REFERENCES "participants"("id") ON DELETE CASCADE ON UPDATE CASCADE;
