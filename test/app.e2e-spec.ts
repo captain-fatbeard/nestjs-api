@@ -74,7 +74,7 @@ describe('App e2e', () => {
             .stores('clientId', 'id');
     });
 
-    it('should create test campaign', () => {
+    it('should create test campaign 1', () => {
         return pactum
             .spec()
             .post('/campaigns')
@@ -82,14 +82,32 @@ describe('App e2e', () => {
                 Authorization: 'Bearer $S{userAt}',
             })
             .withBody({
-                name: 'test campaign name',
+                name: 'test campaign 1 name',
                 isPublished: true,
                 isTemplate: true,
                 clientId: '$S{clientId}',
                 userId: '$S{userId}',
             })
             .expectStatus(201)
-            .stores('testCampaignId', 'id');
+            .stores('testCampaign1Id', 'id');
+    });
+
+    it('should create test campaign 2', () => {
+        return pactum
+            .spec()
+            .post('/campaigns')
+            .withHeaders({
+                Authorization: 'Bearer $S{userAt}',
+            })
+            .withBody({
+                name: 'test campaign 2 name',
+                isPublished: true,
+                isTemplate: true,
+                clientId: '$S{clientId}',
+                userId: '$S{userId}',
+            })
+            .expectStatus(201)
+            .stores('testCampaign2Id', 'id');
     });
 
     authTest(pactum);

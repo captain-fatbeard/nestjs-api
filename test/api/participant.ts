@@ -34,10 +34,24 @@ export function participantTest(pactum) {
                 })
                 .withBody({
                     ...createDto,
-                    campaignId: '$S{testCampaignId}',
+                    campaignId: '$S{testCampaign1Id}',
                 })
                 .expectStatus(201)
                 .stores('participantsId', 'id');
+        });
+
+        it('should connect participant to campaign if already exists', () => {
+            return pactum
+                .spec()
+                .post('/participants')
+                .withHeaders({
+                    Authorization: 'Bearer $S{userAt}',
+                })
+                .withBody({
+                    ...createDto,
+                    campaignId: '$S{testCampaign2Id}',
+                })
+                .expectStatus(201);
         });
 
         it('should show all', () => {

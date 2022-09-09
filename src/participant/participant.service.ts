@@ -14,7 +14,26 @@ export class ParticipantService {
 
     async create(dto: CreateParticipantDto) {
         try {
-            const object = await this.prisma.participant.create({
+            const existingObject = await this.prisma.participant.findUnique({
+                where: {
+                    email: dto.email,
+                },
+            });
+
+            if (existingObject) {
+                const updatedObject = await this.prisma.participant.update({
+                    where: { id: existingObject.id },
+                    data: {
+                        campaigns: {
+                            connect: { id: dto.campaignId },
+                        },
+                    },
+                });
+
+                return updatedObject;
+            }
+
+            const newObject = await this.prisma.participant.create({
                 data: {
                     email: dto.email,
                     campaigns: {
@@ -23,7 +42,7 @@ export class ParticipantService {
                 },
             });
 
-            return object;
+            return newObject;
         } catch (error) {
             if (error instanceof PrismaClientKnownRequestError) {
                 if (error.code === 'P2002') {
