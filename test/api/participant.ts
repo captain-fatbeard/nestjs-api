@@ -11,7 +11,7 @@ export function participantTest(pactum) {
         };
 
         const updateDto: UpdateParticipantDto = {
-            name: 'new participants name',
+            email: 'updateparticipants@test.test',
         };
 
         it('should not create with empty body', () => {

@@ -17,7 +17,9 @@ export class ParticipantService {
             const object = await this.prisma.participant.create({
                 data: {
                     email: dto.email,
-                    campaignId: dto.campaignId,
+                    campaigns: {
+                        connect: { id: dto.campaignId },
+                    },
                 },
             });
 
