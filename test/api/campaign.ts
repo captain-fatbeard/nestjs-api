@@ -1,4 +1,5 @@
 import { CreateCampaignDto, UpdateCampaignDto } from 'src/campaign/dto';
+import { CreateFieldDto } from 'src/field/dto/createField.dto';
 
 export function campaignTest(pactum) {
     describe('campaigns', () => {
@@ -9,6 +10,26 @@ export function campaignTest(pactum) {
             clientId: null,
             userId: null,
         };
+
+        const createSettingDto: CreateFieldDto[] = [
+            {
+                container: 'default',
+                type: 'text',
+                name: 'setting',
+                label: 'setting',
+                value: 'default text',
+            },
+        ];
+
+        const createContentDto: CreateFieldDto[] = [
+            {
+                container: 'default',
+                type: 'text',
+                name: 'content',
+                label: 'content',
+                value: 'default text',
+            },
+        ];
 
         const updateDto: UpdateCampaignDto = {
             name: 'new campaign name',
@@ -39,6 +60,58 @@ export function campaignTest(pactum) {
                 })
                 .expectStatus(201)
                 .stores('campaignId', 'id');
+        });
+
+        it('should create with settings', () => {
+            return pactum
+                .spec()
+                .post('/campaigns')
+                .withHeaders({
+                    Authorization: 'Bearer $S{userAt}',
+                })
+                .withBody({
+                    ...createDto,
+                    name: 'with setting fields',
+                    clientId: '$S{clientId}',
+                    userId: '$S{userId}',
+                    settings: createSettingDto,
+                })
+                .expectStatus(201);
+        });
+
+        it('should create with content', () => {
+            return pactum
+                .spec()
+                .post('/campaigns')
+                .withHeaders({
+                    Authorization: 'Bearer $S{userAt}',
+                })
+                .withBody({
+                    ...createDto,
+                    name: 'with setting fields',
+                    clientId: '$S{clientId}',
+                    userId: '$S{userId}',
+                    content: createContentDto,
+                })
+                .expectStatus(201);
+        });
+
+        it('should create with settings and content', () => {
+            return pactum
+                .spec()
+                .post('/campaigns')
+                .withHeaders({
+                    Authorization: 'Bearer $S{userAt}',
+                })
+                .withBody({
+                    ...createDto,
+                    name: 'with setting fields',
+                    clientId: '$S{clientId}',
+                    userId: '$S{userId}',
+                    settings: createSettingDto,
+                    content: createContentDto,
+                })
+                .expectStatus(201);
         });
 
         it('should show all', () => {

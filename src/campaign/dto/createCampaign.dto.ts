@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+    IsArray,
     IsBoolean,
     IsDateString,
     IsNotEmpty,
@@ -7,6 +8,7 @@ import {
     IsOptional,
     IsString,
 } from 'class-validator';
+import { CreateFieldDto } from 'src/field/dto/createField.dto';
 
 export class CreateCampaignDto {
     @IsString()
@@ -53,4 +55,11 @@ export class CreateCampaignDto {
     @IsNotEmpty()
     @ApiProperty()
     userId: number;
+
+    @IsArray()
+    @IsOptional()
+    settings?: CreateFieldDto[];
+
+    @IsOptional()
+    content?: CreateFieldDto[];
 }

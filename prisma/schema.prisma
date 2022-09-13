@@ -61,6 +61,8 @@ model Campaign {
     user User @relation(fields: [userId], references: [id])
 
     participant Participant[]
+    settings Field[] @relation("settings")
+    content Field[] @relation("content")
     
     @@map("campaigns")
 }
@@ -77,4 +79,27 @@ model Participant {
     campaigns Campaign[]
     
     @@map("participants")
+}
+
+model Field {
+    id Int @id @default(autoincrement())
+
+    container String
+    type String
+    name String
+    label String
+    value String? @db.Text
+    options String? @db.Text
+    description String? @db.Text
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // this until prisma supports polymorphic Associations https://github.com/prisma/prisma/issues/1644
+    campaignContentId Int?
+    campaignSettingId Int?
+    campaignContent Campaign?  @relation("content", fields: [campaignContentId], references: [id])
+    campaignSetting Campaign?  @relation("settings", fields: [campaignSettingId], references: [id])
+
+    @@map("fields")
 }

@@ -14,17 +14,27 @@ export class CampaignService {
 
     async create(dto: CreateCampaignDto) {
         try {
+            const data: CreateCampaignDto = {
+                name: dto.name,
+                slug: dto.slug,
+                theme: dto.theme,
+                isPublished: dto.isPublished,
+                isTemplate: dto.isTemplate,
+                from: dto.from,
+                to: dto.to,
+                clientId: dto.clientId,
+                userId: dto.userId,
+            };
+
             const campaign = await this.prisma.campaign.create({
                 data: {
-                    name: dto.name,
-                    slug: dto.slug,
-                    theme: dto.theme,
-                    isPublished: dto.isPublished,
-                    isTemplate: dto.isTemplate,
-                    from: dto.from,
-                    to: dto.to,
-                    clientId: dto.clientId,
-                    userId: dto.userId,
+                    ...data,
+                    settings: { create: dto.settings },
+                    content: { create: dto.content },
+                },
+                include: {
+                    settings: true,
+                    content: true,
                 },
             });
 
