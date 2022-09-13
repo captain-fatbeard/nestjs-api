@@ -61,6 +61,10 @@ export class CampaignService {
             where: {
                 id: id,
             },
+            include: {
+                settings: true,
+                content: true,
+            },
         });
 
         if (!campaign) {
@@ -71,9 +75,26 @@ export class CampaignService {
     }
 
     async update(id: number, dto: UpdateCampaignDto) {
+        await this.prisma.field.deleteMany({
+            where: {
+                OR: [
+                    { campaignSettingId: Number(id) },
+                    { campaignContentId: Number(id) },
+                ],
+            },
+        });
+
         const campaign = await this.prisma.campaign.update({
             where: { id: Number(id) },
-            data: dto,
+            data: {
+                ...dto,
+                settings: { create: dto.settings },
+                content: { create: dto.content },
+            },
+            include: {
+                settings: true,
+                content: true,
+            },
         });
 
         return campaign;

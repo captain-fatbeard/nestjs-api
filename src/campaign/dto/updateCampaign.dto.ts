@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsDateString, IsOptional, IsString } from 'class-validator';
+import {
+    IsArray,
+    IsBoolean,
+    IsDateString,
+    IsOptional,
+    IsString,
+} from 'class-validator';
+import { CreateFieldDto } from 'src/field/dto/createField.dto';
 
 export class UpdateCampaignDto {
     @IsString()
@@ -36,4 +43,11 @@ export class UpdateCampaignDto {
     @IsOptional()
     @ApiProperty()
     to?: string;
+
+    @IsArray()
+    @IsOptional()
+    settings?: CreateFieldDto[];
+
+    @IsOptional()
+    content?: CreateFieldDto[];
 }

@@ -3,7 +3,7 @@ import { CreateFieldDto } from 'src/field/dto/createField.dto';
 
 export function campaignTest(pactum) {
     describe('campaigns', () => {
-        const createDto: CreateCampaignDto = {
+        const campaignDto: CreateCampaignDto = {
             name: 'campaign name',
             isPublished: true,
             isTemplate: true,
@@ -11,7 +11,7 @@ export function campaignTest(pactum) {
             userId: null,
         };
 
-        const createSettingDto: CreateFieldDto[] = [
+        const settingDto: CreateFieldDto[] = [
             {
                 container: 'default',
                 type: 'text',
@@ -21,7 +21,7 @@ export function campaignTest(pactum) {
             },
         ];
 
-        const createContentDto: CreateFieldDto[] = [
+        const contentDto: CreateFieldDto[] = [
             {
                 container: 'default',
                 type: 'text',
@@ -54,7 +54,7 @@ export function campaignTest(pactum) {
                     Authorization: 'Bearer $S{userAt}',
                 })
                 .withBody({
-                    ...createDto,
+                    ...campaignDto,
                     clientId: '$S{clientId}',
                     userId: '$S{userId}',
                 })
@@ -70,11 +70,11 @@ export function campaignTest(pactum) {
                     Authorization: 'Bearer $S{userAt}',
                 })
                 .withBody({
-                    ...createDto,
+                    ...campaignDto,
                     name: 'with setting fields',
                     clientId: '$S{clientId}',
                     userId: '$S{userId}',
-                    settings: createSettingDto,
+                    settings: settingDto,
                 })
                 .expectStatus(201);
         });
@@ -87,13 +87,14 @@ export function campaignTest(pactum) {
                     Authorization: 'Bearer $S{userAt}',
                 })
                 .withBody({
-                    ...createDto,
-                    name: 'with setting fields',
+                    ...campaignDto,
+                    name: 'with content fields',
                     clientId: '$S{clientId}',
                     userId: '$S{userId}',
-                    content: createContentDto,
+                    content: contentDto,
                 })
-                .expectStatus(201);
+                .expectStatus(201)
+                .stores('campaignWithContentId', 'id');
         });
 
         it('should create with settings and content', () => {
@@ -104,12 +105,12 @@ export function campaignTest(pactum) {
                     Authorization: 'Bearer $S{userAt}',
                 })
                 .withBody({
-                    ...createDto,
+                    ...campaignDto,
                     name: 'with setting fields',
                     clientId: '$S{clientId}',
                     userId: '$S{userId}',
-                    settings: createSettingDto,
-                    content: createContentDto,
+                    settings: settingDto,
+                    content: contentDto,
                 })
                 .expectStatus(201);
         });
@@ -152,6 +153,21 @@ export function campaignTest(pactum) {
                     Authorization: 'Bearer $S{userAt}',
                 })
                 .withBody(updateDto)
+                .expectStatus(200);
+        });
+
+        it('should update with setting and content', () => {
+            return pactum
+                .spec()
+                .put('/campaigns/$S{campaignWithContentId}')
+                .withHeaders({
+                    Authorization: 'Bearer $S{userAt}',
+                })
+                .withBody({
+                    ...updateDto,
+                    settings: settingDto,
+                    content: contentDto,
+                })
                 .expectStatus(200);
         });
 
