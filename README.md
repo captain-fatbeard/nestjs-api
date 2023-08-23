@@ -47,3 +47,6 @@ $ npm run test:e2e
 ## Requirements
 
 The project requires docker, docker-compose and nodeJS.
+
+
+jacob
